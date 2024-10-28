@@ -11,7 +11,7 @@ import {
 export const Tabla = () => {
   return (
     <Table>
-      <TableCaption>A list of your recent invoices.</TableCaption>
+      <TableCaption>Lista de productos</TableCaption>
       <TableHeader>
         <TableRow>
           <TableHead className="w-[100px]">Invoice</TableHead>
