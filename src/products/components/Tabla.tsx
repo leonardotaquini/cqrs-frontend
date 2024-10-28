@@ -3,31 +3,84 @@ import {
   TableBody,
   TableCaption,
   TableCell,
+  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/shadcn/ui/table";
+import { useProductStore } from "../store/product.store";
+import { Button } from "@/components/shadcn/ui/button";
+import { Edit2, Trash } from "lucide-react";
 
 export const Tabla = () => {
+  const products = [
+    {
+      id: "1",
+      name: "Product 1",
+      description: "Description 1",
+      price: 100,
+      quantity: 10,
+    },
+    {
+      id: "2",
+      name: "Product 2",
+      description: "Description 2",
+      price: 200,
+      quantity: 20,
+    },
+  ];
+
+  const productHeader = [
+    "Nombre",
+    "Descripcion",
+    "Precio",
+    "Cantidad",
+    "Acciones",
+  ];
+
   return (
     <Table>
-      <TableCaption>Lista de productos</TableCaption>
+      <TableCaption>Categorias</TableCaption>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Invoice</TableHead>
-          <TableHead>Status</TableHead>
-          <TableHead>Method</TableHead>
-          <TableHead className="text-right">Amount</TableHead>
+          {productHeader.map((header) => (
+            <TableHead key={header}>{header}</TableHead>
+          ))}
         </TableRow>
       </TableHeader>
       <TableBody>
-        <TableRow>
-          <TableCell className="font-medium">INV001</TableCell>
-          <TableCell>Paid</TableCell>
-          <TableCell>Credit Card</TableCell>
-          <TableCell className="text-right">$250.00</TableCell>
-        </TableRow>
+        {products.length > 0 ? (
+          products.map((prodct) => (
+            <TableRow key={prodct.id}>
+              <TableCell>{prodct.name}</TableCell>
+              <TableCell>{prodct.description}</TableCell>
+              <TableCell>{prodct.price}</TableCell>
+              <TableCell>{prodct.quantity}</TableCell>
+
+              <TableCell>
+                <Button variant={"ghost"}>
+                  <Edit2 className=" text-cyan-600"></Edit2>
+                </Button>
+                <Button variant={"ghost"}>
+                  <Trash className=" text-red-600"></Trash>
+                </Button>
+              </TableCell>
+            </TableRow>
+          ))
+        ) : (
+          <TableRow>
+            <TableCell colSpan={8}>Inventario Vacio</TableCell>
+          </TableRow>
+        )}
       </TableBody>
+      <TableFooter>
+        <TableRow>
+          <TableCell colSpan={8}>
+            Cantidad de productos:
+            {products.length}
+          </TableCell>
+        </TableRow>
+      </TableFooter>
     </Table>
   );
 };
