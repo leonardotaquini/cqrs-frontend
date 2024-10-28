@@ -1,8 +1,9 @@
+import { Link } from "react-router-dom"
 
 export const Navbar = () => {
   return (
     <nav className="p-4 border shadow">
-        <h2>CQRS Architecture</h2>
+        <Link to={'/'}>CQRS Architecture</Link>
     </nav>
   )
 }
