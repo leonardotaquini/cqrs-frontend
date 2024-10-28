@@ -4,8 +4,8 @@ import { Tabla } from "../components/Tabla";
 export const ProductPage = () => {
   return (
     <main>
-      <ButtonForm />
-      <Tabla />
+        <ButtonForm />
+        <Tabla />
     </main>
   );
 };

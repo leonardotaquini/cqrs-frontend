@@ -13,23 +13,9 @@ import { Button } from "@/components/shadcn/ui/button";
 import { Edit2, Trash } from "lucide-react";
 
 export const Tabla = () => {
-  const products = [
-    {
-      id: "1",
-      name: "Product 1",
-      description: "Description 1",
-      price: 100,
-      quantity: 10,
-    },
-    {
-      id: "2",
-      name: "Product 2",
-      description: "Description 2",
-      price: 200,
-      quantity: 20,
-    },
-  ];
 
+  const products = useProductStore((state) => state.products);
+  
   const productHeader = [
     "Nombre",
     "Descripcion",
@@ -76,8 +62,7 @@ export const Tabla = () => {
       <TableFooter>
         <TableRow>
           <TableCell colSpan={8}>
-            Cantidad de productos:
-            {products.length}
+            Cantidad de productos: {products.length}
           </TableCell>
         </TableRow>
       </TableFooter>
