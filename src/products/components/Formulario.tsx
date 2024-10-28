@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/shadcn/ui/form";
 import { Input } from "@/components/shadcn/ui/input";
+import { useProductStore } from "../store/product.store";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -34,6 +35,8 @@ const formSchema = z.object({
 });
 
 export function Formulario() {
+  const createProduct = useProductStore((state) => state.createProduct);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -46,6 +49,8 @@ export function Formulario() {
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+
+    // createProduct(values);
   }
 
   return (
