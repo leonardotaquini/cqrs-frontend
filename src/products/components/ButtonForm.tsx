@@ -18,7 +18,7 @@ export const ButtonForm = ({ id }: { id?: string }) => {
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
         <Button variant={id ? "link" : "primary"} className="m-4">
-          {id ? <Edit2 className="text-cyan-600" /> : 'Agregar producto' }
+          {id ? <Edit2 className="text-cyan-600" /> : 'Agregar producto'}
         </Button>
       </DialogTrigger>
       <DialogContent className=" sm: max-[700px]">
@@ -32,7 +32,7 @@ export const ButtonForm = ({ id }: { id?: string }) => {
               : "Llena los campos para crear un nuevo Producto"}
           </DialogDescription>
         </DialogHeader>
-        <Formulario close={() => setOpen(false)} id={ id } />
+        <Formulario close={() => setOpen(false)} id={id} />
       </DialogContent>
     </Dialog>
   );

@@ -1,8 +1,7 @@
-import { Button } from "@/components/shadcn/ui/button";
 import { TableBody, TableCell, TableRow } from "@/components/shadcn/ui/table";
-import { Trash } from "lucide-react";
 import { ButtonForm } from "./ButtonForm";
 import { useProductStore } from "../store/product.store";
+import { AlertDialogDelete } from "@/components/AlerDialogDelete";
 
 export const TableList = () => {
   const products = useProductStore((state) => state.products);
@@ -21,12 +20,7 @@ export const TableList = () => {
 
               <TableCell>
                 <ButtonForm id={product._id} />
-                <Button
-                  variant={"ghost"}
-                  onClick={() => deleteProduct(product._id!)}
-                >
-                  <Trash className=" text-red-600"></Trash>
-                </Button>
+                <AlertDialogDelete title="Eliminar" handleDelete={()=> deleteProduct(product._id!)}/>
               </TableCell>
             </TableRow>
           ))
