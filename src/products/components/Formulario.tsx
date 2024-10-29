@@ -1,4 +1,3 @@
-"use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
@@ -8,7 +7,6 @@ import { Button } from "@/components/shadcn/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -16,6 +14,8 @@ import {
 } from "@/components/shadcn/ui/form";
 import { Input } from "@/components/shadcn/ui/input";
 import { useProductStore } from "../store/product.store";
+import { Loader } from "lucide-react";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -34,8 +34,11 @@ const formSchema = z.object({
   }),
 });
 
-export function Formulario() {
+export function Formulario({ close, id }: { close: () => void, id?: string }) {
   const createProduct = useProductStore((state) => state.createProduct);
+  const updateProduct = useProductStore((state) => state.updateProduct);
+  const isLoading = useProductStore((state) => state.isLoading);
+
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -47,10 +50,24 @@ export function Formulario() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  useEffect(() => {
+    if (id) {
+      const product = useProductStore.getState().products.find((product) => product._id === id);
+      if (product) {
+        form.reset(product);
+      }
+    }
+  }
+  , [id]);
 
-    // createProduct(values);
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    if (id) {
+      updateProduct(id, values);
+    } else {
+      createProduct(values);
+    }
+    close();
+    form.reset();
   }
 
   return (
@@ -112,7 +129,9 @@ export function Formulario() {
             </FormItem>
           )}
         />
-        <Button type="submit">Crear</Button>
+        <Button type="submit" variant={'green'} className="w-full">
+          {isLoading ? <Loader className="w-6 h-6 animate-spin"/> : "Guardar"}
+        </Button>
       </form>
     </Form>
   );

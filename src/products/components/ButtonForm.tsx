@@ -2,27 +2,37 @@ import { Button } from "@/components/shadcn/ui/button";
 import {
   Dialog,
   DialogContent,
-  DialogFooter,
+  DialogDescription,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/shadcn/ui/dialog";
 
 import { Formulario } from "./Formulario";
-export const ButtonForm = () => {
+import { useState } from "react";
+import { Edit2 } from "lucide-react";
+export const ButtonForm = ({ id }: { id?: string }) => {
+  const [open, setOpen] = useState(false);
+
   return (
-    <Dialog>
+    <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger asChild>
-        <Button className="m-4" variant="default">
-          Crear producto
+        <Button variant={id ? "link" : "primary"} className="m-4">
+          {id ? <Edit2 className="text-cyan-600" /> : 'Agregar producto' }
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className=" sm: max-[700px]">
         <DialogHeader>
-          <DialogTitle>Crear producto</DialogTitle>
+          <DialogTitle>
+            {id ? "Editar Producto" : "Crear Producto"}
+          </DialogTitle>
+          <DialogDescription>
+            {id
+              ? "Edita los campos que desees"
+              : "Llena los campos para crear un nuevo Producto"}
+          </DialogDescription>
         </DialogHeader>
-        <Formulario />
-        <DialogFooter></DialogFooter>
+        <Formulario close={() => setOpen(false)} id={ id } />
       </DialogContent>
     </Dialog>
   );

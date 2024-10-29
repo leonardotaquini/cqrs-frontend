@@ -21,28 +21,42 @@ const productStore: StateCreator<IProductStore> = (set, get) => ({
     getProducts: async () => {
         set({ isLoading: true });
         const response = await getProducts();
-        set({ products: response.data });
+        if (response?.status === 200){
+            set({isLoading:false, products: response.data });
+        }
+        set({ isLoading: false });
     },
     getProduct: async (id: string) => {
         set({ isLoading: true });
-        const product = await getProduct(id);
+        const response = await getProduct(id);
+        if (response?.status === 200) return response.data;
         set({ isLoading: false });
-        return product;
+
     },
     createProduct: async (product: IProduct) => {
         set({ isLoading: true });
         const response = await createProduct(product);
-        set({ isLoading: false, products: [...get().products, response] });
+        if (response?.status === 201){
+            set({ isLoading: false, products: [...get().products, response.data.product] });
+        }
+        set({ isLoading: false });
     },
     updateProduct: async (id: string, product: IProduct) => {
         set({ isLoading: true });
         const response = await updateProduct(id, product);
-        set({ isLoading: false, products: get().products.map((p) => p.id === id ? response : p) });
+        if (response?.status === 204){
+            const newProduct = { ...product, _id: id };
+            set({ isLoading: false, products: get().products.map((p) => p._id === id ? newProduct : p) });
+        }
+        set({ isLoading: false });
     },
     deleteProduct: async (id: string) => {
         set({ isLoading: true });
-        await deleteProduct(id);
-        set({ isLoading: false, products: get().products.filter((p) => p.id !== id) });
+        const response = await deleteProduct(id);
+        if (response?.status === 204){
+            set({ isLoading: false, products: get().products.filter((p) => p._id !== id) });
+        }
+        set({ isLoading: false });
     },
 })
 

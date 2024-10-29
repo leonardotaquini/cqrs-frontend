@@ -12,8 +12,8 @@ const apiProducts = axios.create({
 
 export const getProducts = async () => {
   try {
-    const response = await apiProducts.get("/");
-    return response.data;
+    const response = await apiProducts.get("/querys/products");
+    return response;
   } catch (error) {
     console.error(error);
   }
@@ -21,8 +21,8 @@ export const getProducts = async () => {
 
 export const getProduct = async (id: string) => {
   try {
-    const response = await apiProducts.get(`/${id}`);
-    return response.data;
+    const response = await apiProducts.get(`/querys/products/${id}`);
+    return response;
   } catch (error) {
     console.error(error);
   }
@@ -30,8 +30,8 @@ export const getProduct = async (id: string) => {
 
 export const createProduct = async (product: IProduct) => {
   try {
-    const response = await apiProducts.post("/", product);
-    return response.data;
+    const response = await apiProducts.post("/commands/products", product);
+    return response;
   } catch (error) {
     console.log(error);
   }
@@ -39,8 +39,8 @@ export const createProduct = async (product: IProduct) => {
 
 export const updateProduct = async (id: string, product: IProduct) => {
   try {
-    const response = await apiProducts.put(`/${id}`, product);
-    return response.data;
+    const response = await apiProducts.put(`/commands/products/${id}`, product);
+    return response;
   } catch (error) {
     console.log(error);
   }
@@ -48,8 +48,8 @@ export const updateProduct = async (id: string, product: IProduct) => {
 
 export const deleteProduct = async (id: string) => {
   try {
-    const response = await apiProducts.delete(`/${id}`);
-    return response.data;
+    const response = await apiProducts.delete(`/commands/products/${id}`);
+    return response;
   } catch (error) {
     console.log(error);
   }
